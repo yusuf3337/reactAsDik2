@@ -12,11 +12,16 @@ export default function App() {
 
 const [name,setName] = useState("")
 const [password,setPassword] = useState("")
+const [result,setResult] = useState('')
 
 
   return (
     <View style={styles.container}>
+
+      <Text>Welcome {result}</Text>
+      
       <Text>Name</Text>
+      
       <TextInput
        style={styles.textInputStyle}
        placeholder='Enter Your Name'
@@ -32,8 +37,10 @@ const [password,setPassword] = useState("")
       />
 
       <Pressable
-        onPress={()=> console.log("clicked")}
-        style={styles.buttonStyle}>
+        onPress={()=> setResult(name) }
+        style={({pressed}) =>  [{
+          backgroundColor: pressed ? "gray" : 'orange'
+        }, styles.buttonStyle  ]}>
 
         <Text style={styles.buttonText}>Save</Text>
 
@@ -64,7 +71,6 @@ const styles = StyleSheet.create({
     borderRadius:20,
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor:'orange',
   },
   buttonText:{
     color:'white',
