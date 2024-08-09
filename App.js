@@ -3,48 +3,67 @@ import {
   Text,
   View,
   TextInput,
-  Pressable
+  Pressable,
+  Image
    } from 'react-native';
 
 import React, {useState} from 'react';
+import Loading from "./src/components/Loading"
 
 export default function App() {
 
 const [name,setName] = useState("")
 const [password,setPassword] = useState("")
 const [result,setResult] = useState('')
+const [isLoading,setIsLoading] = useState(false)
+
+console.log(isLoading)
 
 
   return (
     <View style={styles.container}>
 
-      <Text>Welcome {result}</Text>
+    <Image
+    style={styles.passwdStyle}
+    source={require("/Users/yusuf/Desktop/reactAll/reactAsDik2/assets/images/passwdicon.png")}
+    />
+
+
+      <Text style={styles.welcomeStyle}>Welcome {result}</Text>
       
-      <Text>Name</Text>
+      <Text>Email</Text>
       
       <TextInput
+      inputMode='email'
        style={styles.textInputStyle}
-       placeholder='Enter Your Name'
+       placeholder='Enter Your Email'
        onChangeText={setName}
        />
 
       <Text>Password</Text>
       <TextInput
+      secureTextEntry={true}
       style={styles.textInputStyle}
       keyboardType='numeric'
       placeholder='Enter Your Password'
       onChangeText={setPassword}
       />
 
-      <Pressable
-        onPress={()=> setResult(name) }
-        style={({pressed}) =>  [{
-          backgroundColor: pressed ? "gray" : 'orange'
-        }, styles.buttonStyle  ]}>
+    <Pressable
+      onPress={() => setIsLoading(true)}
+      style={({ pressed }) => [{
+        backgroundColor: pressed ? "gray" : 'orange'
+      }, styles.buttonStyle]}>
 
-        <Text style={styles.buttonText}>Save</Text>
+      <Text style={styles.buttonText}>Login</Text>
 
-      </Pressable>
+    </Pressable>
+
+      {isLoading ? 
+      <Loading 
+      changeIsLoading={() => setIsLoading(false)}/>
+       : null}
+
     </View>
   );
 }
@@ -65,15 +84,24 @@ const styles = StyleSheet.create({
     borderRadius:20,
     textAlign:'center'
   },
-  buttonStyle:{
-    width:80,
-    height:30,
-    borderRadius:20,
-    alignItems:'center',
-    justifyContent:'center',
+  buttonStyle: {
+    width: 150,
+    height: 40,
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10, // Loading yazısına yer açmak için butonun altına boşluk ekliyoruz.
   },
-  buttonText:{
-    color:'white',
-    fontWeight:'bold'
+  buttonText: {
+    color: 'white',
+    fontWeight: 'bold'
+  },
+  passwdStyle:{
+    height:80,
+    width:80,
+  },
+  welcomeStyle:{
+    fontWeight:'bold',
+    fontSize:22
   }
 });
